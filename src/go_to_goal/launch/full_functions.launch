@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+  <!-- ZED -->
+  <include file="$(find zed_wrapper)/launch/zed_no_tf.launch"/>
+
+  <!-- Pocketsphinx -->
+  <include file="$(find pocketsphinx)/launch/pocketsphinx.launch"/>
+
+
+  <!-- Arguments -->
+  <arg name="ssh" default="0"/>
+  <arg name="force" default="0"/>
+  <arg name="test" default="0"/>
+  <arg name="suitcase" default="1"/>
+  
+
+  <!-- [DEFAULT] test = 0, run actual codes-->
+  <group unless="$(arg test)">
+  
+    <!-- Send Command (poping window)-->
+    <node unless="$(arg ssh)" pkg="speech_control" type="send_command_01" name="command" respawn="true" launch-prefix="xterm -e"/>
+
+    <!-- Send Goal (poping window) -->
+    <node unless="$(arg ssh)" pkg="go_to_goal" type="send_goal_01" name="goal" respawn="true" launch-prefix="xterm -e"/>
+
+    <!-- Send Command (no window)-->
+    <node if="$(arg ssh)" pkg="speech_control" type="send_command_01" name="command" respawn="true"/>
+
+    <!-- Send Goal (no window) -->
+    <node if="$(arg ssh)" pkg="go_to_goal" type="send_goal_01" name="goal" respawn="true"/>
+  </group>
+
+  <!-- force = 1, include force feedback-->
+  <group if="$(arg force)">
+    <!-- Arduino Load Cell -->
+    <node pkg="rosserial_python" type="serial_node.py" name="arduino">
+      <param name="port" value="/dev/ttyUSB0"/>
+      <param name="baud" value="57600"/>
+    </node>
+
+    <!-- Send Speed -->
+    <node pkg="speech_control" type="speed_tuning" name="speed"/>
+  </group>
+
+
+  <!-- [DEFAULT] suitcase = 1, using suitcase detection-->
+  <group if="$(arg suitcase)">
+    <!-- Darknet YOLOv3-tiny -->
+    <include file="$(find darknet_ros)/launch/yolo_v3_tiny_suitcase.launch"/>
+  </group>
+
+
+  <!-- suitcase = 0, using gate & counter detection-->
+  <group unless="$(arg suitcase)">
+    <!-- Darknet YOLOv3-tiny -->
+    <include file="$(find darknet_ros)/launch/yolo_v3_tiny_plant_counter.launch"/>
+  </group>
+</launch>

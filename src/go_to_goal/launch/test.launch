@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+  <!-- Pocketsphinx -->
+  <include file="$(find pocketsphinx)/launch/pocketsphinx.launch"/>
+
+  <node pkg="speech_control" type="test_run" name="test_run"/>
+
+</launch>

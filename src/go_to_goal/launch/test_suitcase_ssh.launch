@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+  <!-- ZED -->
+  <include file="$(find zed_wrapper)/launch/zed_no_tf.launch"/>
+
+  <!-- Darknet YOLOv3-tiny -->
+  <include file="$(find darknet_ros)/launch/yolo_v3_tiny_suitcase.launch"/>
+
+  <!-- Arduino Load Cell -->
+  <node pkg="rosserial_python" type="serial_node.py" name="arduino">
+    <param name="port" value="/dev/ttyUSB0"/>
+    <param name="baud" value="57600"/>
+  </node>
+
+  <!-- Pocketsphinx -->
+  <include file="$(find pocketsphinx)/launch/pocketsphinx.launch"/>
+
+  <!-- Send Speed -->
+  <node pkg="speech_control" type="speed_tuning" name="speed"/>
+
+  <!-- Send Command -->
+  <node pkg="speech_control" type="send_command_01" name="command"/>
+
+  <!-- Send Goal -->
+  <node pkg="go_to_goal" type="send_goal_01" name="goal"/>
+
+</launch>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+  <!-- ZED -->
+  <include file="$(find zed_wrapper)/launch/zed_no_tf.launch"/>
+
+  <!-- Darknet YOLOv3-tiny -->
+  <include file="$(find darknet_ros)/launch/yolo_v3_tiny_suitcase.launch"/>
+
+  <!-- Pocketsphinx -->
+  <include file="$(find pocketsphinx)/launch/pocketsphinx.launch"/>
+
+  <!-- Send Command -->
+  <node pkg="speech_control" type="send_command_01" name="command" launch-prefix="xterm -e"/>
+
+  <!-- Send Goal -->
+  <node pkg="go_to_goal" type="send_goal_01" name="goal" launch-prefix="xterm -e"/>
+
+</launch>
