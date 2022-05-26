@@ -13,4 +13,8 @@
     *src/darknet_ros/darknet_ros/launch*
 
 2. Launch both ZED and darknet nodes.
-$ roslaunch zed_wrapper full_functions.launch
+```
+$ roslaunch zed_wrapper zed.launch
+$ roslaunch darknet_ros XXX.launch
+```
+I used zed_no_tf.launch in my own launch file, because the clock in ZED TF somehow didn't match with the rest of the packages. Potentially because I updated the system clock one time.
