@@ -11,7 +11,7 @@
     * `speech_control` package is to process the voice commands and send basic instructions. 
     * `go_to_goal` package is to process commands that involve object detection and navigation.
     * These 2 could be done within 1 package, but this is just how I built it along the way. You can also see my progress from all the unused codes. I decided to just upload them all for fun.
-    * The navigation function comes with the A1 Robot Dog and is launched seperately on the onboard Raspberry Pi.\
+    * The navigation function comes with the A1 Robot Dog and is launched seperately on the onboard Raspberry Pi.
 
 ## To launch the codes
 ```
