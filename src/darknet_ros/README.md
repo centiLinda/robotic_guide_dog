@@ -1,4 +1,4 @@
-# How to set up darknet_ros package
+## How to set up darknet_ros package
 1. Install `darknet_ros` package and put the following files into repective folders. Use your own files if you want to detect different objects.
     * yolov3-tiny-XXX.weights\
     *src/darknet_ros/darknet_ros/yolo_network_config/weights*
